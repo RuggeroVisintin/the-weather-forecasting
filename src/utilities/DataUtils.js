@@ -113,9 +113,10 @@ export const getTodayForecastWeather = (
 ) => {
   let all_today_forecasts = [];
 
-  if (!response || Object.keys(response).length === 0 || response.cod === '404')
+  if (!response || Object.keys(response).length === 0 || response.cod === '404') {
+    console.warn('No weather forecast data available');
     return [];
-  else
+  } else {
     response?.list.slice().map((item) => {
       if (item.dt_txt.startsWith(current_date.substring(0, 10))) {
         if (item.dt > current_datetime) {
@@ -128,6 +129,7 @@ export const getTodayForecastWeather = (
       }
       return all_today_forecasts;
     });
+  }
 
   if (all_today_forecasts.length < 7) {
     return [...all_today_forecasts];
